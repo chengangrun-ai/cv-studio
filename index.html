@@ -1893,7 +1893,9 @@ async function emailLogin(e){
 async function wechatLogin(){
   if(!CLOUD) return;
   $('#loginErr').textContent='';
-  const {data,error}=await CLOUD.auth.signInWithOAuth({provider:'wechat',redirectTo:location.origin});
+  const back=new URL(location.href);
+  for(const k of ['code','state','provider']) back.searchParams.delete(k);
+  const {data,error}=await CLOUD.auth.signInWithOAuth({provider:'wechat',redirectTo:back.toString()});
   if(error){ $('#loginErr').textContent=error.message; return; }
   location.assign(data.url);
 }
@@ -1964,6 +1966,11 @@ requestAnimationFrame(applyZoom);
       out.push('add='+(agentEdit('加一条 测试用的成绩数字 30%')?'ok':'no'));
       out.push('md='+toMarkdown().length);
       out.push('sdk='+(window.WorkBuddyCloud?'loaded':'missing'));
+      try{
+        CLOUD = CLOUD || WorkBuddyCloud.createWorkBuddyCloud(CLOUD_CFG);
+        const o = await CLOUD.auth.signInWithOAuth({provider:'wechat',redirectTo:location.origin});
+        out.push('oauth='+(o.error?('ERR:'+o.error.message):(o.data&&o.data.url?'ok':'empty')));
+      }catch(e){ out.push('oauth=THROW:'+(e&&e.message)); }
     }catch(e){ out.push('ERR:'+e.message); }
     document.title='TEST '+out.join(' | ');
     return;
