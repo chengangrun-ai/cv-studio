@@ -1,0 +1,17 @@
+# 生成物
+out/
+lab/corpus/
+lab/results/text/
+lab/ground_truth.json
+lab/ground_truth_real.json
+shots/
+
+# 个人数据
+data/profile.json
+
+# 依赖与杂项
+node_modules/
+_tmp*
+*.log
+.DS_Store
+Thumbs.db
