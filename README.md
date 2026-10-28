@@ -1,6 +1,8 @@
-# cv(studio) · 简历工坊
+# 公子简历作坊
 
-一份数据，四套版式，六道体检。网页端和 MCP 服务器共用同一份 JSON。
+一份数据，四套版式，六道体检。登录后存在云端，手机电脑打开是同一份。
+
+**线上地址**：https://gongzi-cv.app.workbuddy.host
 
 ![预览](docs/preview.png)
 
@@ -19,58 +21,17 @@
 
 完整表格、复现脚本和事故现场在 [`lab/`](lab/)。
 
-## 三个文件
+## 用起来
 
-```
-index.html        网页端，双击就开，零依赖
-mcp-server.mjs    给 Agent 用的 MCP 服务器，零依赖
-data/profile.json 数据（网页「导出 JSON」就是这个格式）
-```
+打开线上地址，登录，开始写。
 
-## 快速开始
-
-**网页端**：双击 `index.html`。第一次让你选「看示例」还是「从零开始」。
-
+- **微信登录**，或者**邮箱验证码**，不需要记密码
 - 左边填资料，中间实时变，右边体检
 - 顶部四个胶囊换版式：衬线学术 / 工程等宽 / 极简无衬线 / 中文国企
-- 顶栏「问 Agent」是引导式问答，「Agent 接口」里是 MCP 配置
-- 数据存在浏览器 localStorage；换设备用「导出 JSON」
+- 每次改动自动存云端，顶栏头像变黄表示正在存
+- 「导出 PDF」走浏览器打印，A4，页边距选「无」
 
-**导出 PDF**：浏览器打印 → 另存为 PDF，A4，页边距选「无」。
-
-**自测**：
-
-```bash
-node test-mcp.mjs     # 14 项，含真实 PDF 落盘
-```
-
-## 让 Agent 调
-
-服务器零依赖，有 node 就行。Claude Desktop 或 Cursor：
-
-```json
-{
-  "mcpServers": {
-    "cv-studio": {
-      "command": "node",
-      "args": ["<你的路径>/cv-studio/mcp-server.mjs"]
-    }
-  }
-}
-```
-
-| 工具 | 干什么 |
-|---|---|
-| `profile_get` | 读全部资料 |
-| `profile_set` | 写，深合并，只传要改的 |
-| `resume_check` | 六项体检 + 关键词覆盖 |
-| `resume_export` | 出 pdf / html / md / json，写到 `out/` |
-| `track_add` | 记一次投递，带上当时的体检结果 |
-| `track_stats` | 回复率统计，样本 < 8 会明确警告 |
-
-连上之后只需要说「按这份 JD 改简历」，Agent 会自己 `profile_get` → `profile_set` → `resume_check` → `resume_export`。
-
-数据目录和输出目录都能改：`CV_STUDIO_DATA`、`CV_STUDIO_OUT`（自测就是这么隔离的）。
+不想登录也能点「先看看」，进演示模式 —— 顶栏会写明「演示模式（不保存）」，数据不会存。
 
 ## 六项体检
 
@@ -96,24 +57,65 @@ node test-mcp.mjs     # 14 项，含真实 PDF 落盘
 
 同一份数据，四种排版。中文国企那套带照片位、出生年月、政治面貌、籍贯。
 
+## 架构
+
+```
+index.html        前端（单文件，原生 JS，无构建）
+                  云 SDK 从 CDN 加载：@tencent-ai/workbuddy-cloud-sdk
+mcp-server.mjs    给 Agent 用的 MCP 服务器（本地，零依赖）
+lab/              测量语料与脚本
+```
+
+后端是 WorkBuddy 云服务：
+
+- **Auth** —— 微信 OAuth（走 Relay）+ 邮箱验证码
+- **Database** —— `resumes` 表，一行一个用户，`data` 是 JSONB
+- **RLS** —— `owner_id = auth.uid()`，SELECT / INSERT / UPDATE 三条策略，前端从不发送 `owner_id`
+
+## 让 Agent 调
+
+本地跑一个 MCP 服务器，读写的是同一套数据结构：
+
+```json
+{
+  "mcpServers": {
+    "gongzi-cv": {
+      "command": "node",
+      "args": ["<你的路径>/cv-studio/mcp-server.mjs"]
+    }
+  }
+}
+```
+
+| 工具 | 干什么 |
+|---|---|
+| `profile_get` | 读全部资料 |
+| `profile_set` | 写，深合并，只传要改的 |
+| `resume_check` | 六项体检 + 关键词覆盖 |
+| `resume_export` | 出 pdf / html / md / json |
+| `track_add` | 记一次投递 |
+| `track_stats` | 回复率统计，样本 < 8 会明确警告 |
+
+自测：`node test-mcp.mjs`，14 项。
+
 ## 边界
 
-- **没有后端**。数据在本机，换设备要手动搬 JSON。
-- **导出用浏览器打印**，不是 Typst。够用，但没有字体子集嵌入和分页控制 —— 实测显示单栏 + 打印这条链路是 100% 可读的，所以先没换。
+- **微信登录只在发布域名上有效**，本地 `file://` 和预览链接会被 Relay 拒绝 —— 这是平台限制，不是 bug。
+- **MCP 服务器连的是本地 JSON 文件**，云端数据要手动导出 JSON 再喂给它。还没做直连。
 - **关键词词典**硬编码 70 来个词，覆盖产品 / 技术 / 财务 / 销售 / HR，冷门行业会漏。
+- **导出用浏览器打印**，不是 Typst。实测单栏 + 打印这条链路 100% 可读，所以先没换。
 - **没有版本历史**。改了就改了。
-- **Agent 改完的文件，网页不会自动读** —— 这一环还没接上。
 
 ## lab 里怎么复现
 
 ```bash
 cd lab
 python gen_corpus.py     # 生成 51 份对抗性语料（需要 Chrome）
-python extract.py        # 三个解析器跑一遍，出 raw.json
+python extract.py        # 三个解析器跑一遍
 python score.py          # 出表
 ```
 
-语料内容是合成的（虚构人名公司），**版式和 PDF 生成链路是真的**。真简历放进 `lab/corpus/real/` + 一份 `labels.csv`，跑同样的命令就并入同一张表。
+语料内容是合成的（虚构人名公司），**版式和 PDF 生成链路是真的**。
 
 ## License
 

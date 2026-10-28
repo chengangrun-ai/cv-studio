@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>简历工坊 cv(studio)</title>
+<title>公子简历作坊</title>
 <style>
 :root{
   --sans:"PingFang SC","HarmonyOS Sans SC","MiSans","Source Han Sans SC",
@@ -192,6 +192,67 @@ body.is-app .bg__veil{opacity:1;}
 .dev--phone .dev__body i{height:3px;}
 .chip{position:absolute;z-index:6;left:50%;bottom:-16px;transform:translateX(-50%);display:flex;gap:6px;padding:8px 13px;border-radius:999px;background:rgba(9,22,52,.8);border:1px solid rgba(255,255,255,.26);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:rgba(226,241,255,.92);white-space:nowrap;box-shadow:0 18px 36px -18px rgba(4,16,44,.9);}
 .chip s{text-decoration:none;color:rgba(120,200,255,.95);}
+
+/* ---------- 登录 ---------- */
+.login{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:20px;}
+.login::before{content:"";position:absolute;inset:0;background:rgba(9,20,52,.34);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+.login__card{position:relative;}
+.login__card{
+  width:min(380px,94vw);padding:30px 28px 22px;border-radius:20px;
+  background:rgba(252,253,255,.96);
+  box-shadow:0 60px 120px -50px rgba(4,16,44,.85),inset 0 0 0 1px rgba(255,255,255,.9);
+  display:flex;flex-direction:column;
+}
+.login__mark{display:flex;align-items:center;gap:9px;margin-bottom:18px;}
+.login__mark svg{width:34px;height:auto;display:block;}
+.login__mark span{font-size:13px;letter-spacing:.16em;color:#16336d;}
+.login__h{margin:0;font-size:20px;font-weight:400;letter-spacing:.02em;color:#12203c;}
+.login__sub{margin:8px 0 20px;font-size:11.8px;line-height:1.7;color:var(--ink-3);}
+.login__btn{
+  width:100%;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:13px;letter-spacing:.06em;transition:all .25s var(--ease);
+}
+.login__btn--wx{background:#07c160;color:#fff;box-shadow:0 14px 28px -16px rgba(7,193,96,.8);}
+.login__btn--wx:hover{filter:brightness(1.05);}
+.login__btn--pri{background:linear-gradient(100deg,#0d2350,#1a6cc0 62%,#48aaf0);color:#eef6ff;margin-top:4px;box-shadow:0 14px 26px -14px rgba(9,36,88,.7);}
+.login__btn--pri:hover{filter:brightness(1.08);}
+.login__or{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--ink-3);font-size:10.5px;letter-spacing:.14em;}
+.login__or::before,.login__or::after{content:"";flex:1;height:1px;background:rgba(22,51,109,.1);}
+.login__form{display:flex;flex-direction:column;gap:10px;}
+.login__fld{display:block;}
+.login__fld>span:first-child{display:block;font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);margin-bottom:5px;}
+.login__fld input{
+  width:100%;height:40px;padding:0 12px;border-radius:9px;font-size:13px;color:#16233d;
+  background:#fff;border:1px solid rgba(22,51,109,.16);transition:border-color .25s var(--ease);
+}
+.login__fld input:focus{border-color:rgba(26,108,192,.6);}
+.login__row{display:flex;gap:8px;}
+.login__row input{flex:1;}
+.login__send{
+  flex:0 0 auto;padding:0 13px;height:40px;border-radius:9px;white-space:nowrap;
+  font-size:11.5px;letter-spacing:.04em;color:#1a5fa8;
+  background:rgba(26,108,192,.09);border:1px solid rgba(26,108,192,.16);
+  transition:background .25s var(--ease);
+}
+.login__send:hover:not(:disabled){background:rgba(26,108,192,.16);}
+.login__send:disabled{opacity:.5;cursor:not-allowed;}
+.login__err{min-height:16px;margin:10px 0 0;font-size:11px;line-height:1.6;color:#b4432a;}
+.login__skip{margin-top:8px;width:100%;font-size:11.5px;letter-spacing:.06em;color:var(--ink-2);padding:7px;transition:color .25s var(--ease);}
+.login__skip:hover{color:#123f7f;}
+body.is-demo .bar__name::after{content:" · 演示模式（不保存）";font-size:10px;letter-spacing:.04em;color:rgba(255,214,170,.9);}
+
+/* 顶栏用户 */
+.bar__user{
+  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px 0 4px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);
+  transition:background .3s var(--ease);max-width:170px;
+}
+.bar__user:hover{background:rgba(255,255,255,.18);}
+.bar__user i{
+  width:24px;height:24px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-style:normal;font-size:11px;font-weight:500;color:#0f2350;background:#dbeafe;
+}
+.bar__user span{font-size:11.5px;color:rgba(238,248,255,.92);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* ---------- 工作台 ---------- */
 .app{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .7s var(--ease);}
@@ -402,7 +463,7 @@ body.is-app .app{opacity:1;pointer-events:auto;}
 .ring__num{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-size:30px;font-weight:300;color:#16336d;letter-spacing:-.02em;line-height:1;}
 .ring__num>span{display:inline-flex;align-items:baseline;gap:1px;}
 .ring__num b{font-weight:300;}
-.ring__num s{font-size:12px;text-decoration:none;color:var(--ink-3);font-weight:400;}
+.ring__num s{font-size:13px;text-decoration:none;color:var(--ink-2);font-weight:400;}
 .ring__side{min-width:0;}
 .ring__t{font-size:12.5px;color:#1b2c4c;letter-spacing:.02em;}
 .ring__d{margin-top:6px;font-size:10.6px;line-height:1.65;color:var(--ink-3);}
@@ -570,6 +631,47 @@ body.is-app .app{opacity:1;pointer-events:auto;}
   <div class="bg__grain"></div>
 </div>
 
+<!-- ================= 登录 ================= -->
+<div class="login" id="login" hidden>
+  <div class="login__card">
+    <div class="login__mark">
+      <svg viewBox="0 0 76 40" fill="none" aria-hidden="true">
+        <rect x="2" y="4" width="26" height="32" rx="4" fill="#0f2350"/>
+        <rect x="20" y="8" width="24" height="28" rx="4" fill="#1d78cc" opacity=".9"/>
+        <rect x="38" y="13" width="22" height="23" rx="4" fill="#3aa0e8" opacity=".8"/>
+      </svg>
+      <span>公子简历作坊</span>
+    </div>
+    <h2 class="login__h">登录，然后开始写</h2>
+    <p class="login__sub">简历存在云端。换台设备打开，还是这一份。</p>
+
+    <button class="login__btn login__btn--wx" id="btnWechat" type="button">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.7 3C4.4 3 1 6 1 9.7c0 2.1 1.2 4 3 5.2l-.7 2.3 2.6-1.3c.8.2 1.7.4 2.6.4h.6a5.7 5.7 0 0 1-.2-1.5c0-3.4 3.3-6.1 7.3-6.1h.6C15.9 5.1 12.6 3 8.7 3Zm-2.6 3.6a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm5.3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/><path d="M23 14.8c0-3-3-5.5-6.6-5.5s-6.6 2.5-6.6 5.5 3 5.5 6.6 5.5c.7 0 1.4-.1 2.1-.3l2.2 1.1-.6-1.9c1.8-1 2.9-2.6 2.9-4.4Zm-8.8-1.6a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Zm4.4 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Z"/></svg>
+      微信登录
+    </button>
+
+    <div class="login__or"><span>或</span></div>
+
+    <form class="login__form" id="emailForm" autocomplete="on">
+      <label class="login__fld">
+        <span>邮箱</span>
+        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+      </label>
+      <label class="login__fld">
+        <span>验证码</span>
+        <span class="login__row">
+          <input type="text" id="loginCode" inputmode="numeric" maxlength="6" placeholder="6 位数字" autocomplete="one-time-code">
+          <button class="login__send" type="button" id="btnSendCode">获取验证码</button>
+        </span>
+      </label>
+      <button class="login__btn login__btn--pri" type="submit" id="btnEmailLogin">登录 / 注册</button>
+    </form>
+
+    <p class="login__err" id="loginErr"></p>
+    <button class="login__skip" type="button" id="btnDemo">先看看，不登录</button>
+  </div>
+</div>
+
 <!-- ================= 引导 ================= -->
 <section class="intro" id="intro">
   <nav class="progress" id="progress" aria-label="引导进度"></nav>
@@ -709,14 +811,14 @@ body.is-app .app{opacity:1;pointer-events:auto;}
           </div>
           <div class="copy">
             <h1 class="title">哪个端都能用，<span class="brandword">谁都能调</span></h1>
-            <p class="sub">手机和电脑打开是同一个工作台，数据存在你自己设备上。Claude、Cursor、任何 Agent 都能通过 MCP 直接读写你的简历。</p>
+            <p class="sub">手机和电脑打开是同一份简历，存在云端，换设备接着改。Claude、Cursor、任何 Agent 都能通过 MCP 直接读写。</p>
           </div>
         </div>
         <div class="foot__right">
-          <button class="cta" data-enter="demo">看示例，进工作台
+          <button class="cta" data-enter="start">开始写我的简历
             <svg width="19" height="12" viewBox="0 0 19 12" fill="none" aria-hidden="true"><path d="M1 6h15M11.2 1.2 16.6 6l-5.4 4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <button class="skip" data-enter="empty">从零开始，让 Agent 问我</button>
+          <button class="skip" data-enter="demo">先看看，不登录</button>
         </div>
       </div>
     </article>
@@ -733,9 +835,12 @@ body.is-app .app{opacity:1;pointer-events:auto;}
         <rect x="20" y="8" width="24" height="28" rx="4" fill="#7fc0f5" opacity=".9"/>
         <rect x="38" y="13" width="22" height="23" rx="4" fill="#3aa0e8" opacity=".8"/>
       </svg>
-      <span class="bar__name">简历工坊 <i>cv(studio)</i></span>
+      <span class="bar__name">公子简历作坊 <i>gongzi.cv</i></span>
     </div>
     <div class="bar__sp"></div>
+    <button class="bar__user" id="btnUser" title="点一下退出登录">
+      <i id="userInitial">·</i><span id="userName">未登录</span>
+    </button>
     <button class="bar__btn" id="btnAgent"><b style="font-weight:400">✦</b><span>问 Agent</span></button>
     <button class="bar__btn" id="btnMcp"><b style="font-weight:400">⌘</b><span>Agent 接口</span></button>
     <button class="bar__btn bar__btn--solid" id="btnPrint"><b style="font-weight:400">↓</b><span>导出 PDF</span></button>
@@ -887,6 +992,7 @@ body.is-app .app{opacity:1;pointer-events:auto;}
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 <script>
 (function(){
 "use strict";
@@ -952,20 +1058,69 @@ const DEMO = {
   ]
 };
 
-let S = clone(DEMO);
+let S = clone(EMPTY);
 let SKIN = 'serif';
 let ZOOM = null;
-let HAD_SAVED = false;
-const LSKEY = 'cvstudio.v1';
 
-function load(){
-  try{
-    const raw = localStorage.getItem(LSKEY);
-    if(raw){ const d=JSON.parse(raw); if(d&&d.profile){ S=d; SKIN=d.__skin||'serif'; HAD_SAVED=true; } }
-  }catch(e){}
+/* ---------- 云端 ---------- */
+const CLOUD_CFG = {
+  endpoint: 'https://gongzi-cv.app.workbuddy.host',
+  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
+  publishableKey: 'wbpk_1F5SWltyDq8MSJ9oSVBczu_QvxtFw3zEgEYllchuHzZ4bNqqgSfDbOb'
+};
+let CLOUD = null, SESSION = null, ROW_ID = null, SAVE_T = null, MODE = 'cloud';
+let pendingOtp = null;
+
+function setSync(state){
+  const dot = $('#userInitial');
+  if(!dot) return;
+  dot.style.background = state==='saving' ? '#fcd9a0' : state==='error' ? '#f3b6a6' : '#dbeafe';
+  const b = $('#btnUser');
+  if(b) b.title = state==='saving' ? '正在保存…' : state==='error' ? '上次保存失败' : '已保存到云端 · 点一下退出登录';
 }
+
 function save(){
-  try{ const d=clone(S); d.__skin=SKIN; localStorage.setItem(LSKEY, JSON.stringify(d)); }catch(e){}
+  if(MODE!=='cloud' || !CLOUD || !SESSION) return;
+  clearTimeout(SAVE_T);
+  setSync('saving');
+  SAVE_T = setTimeout(pushCloud, 700);
+}
+
+async function pushCloud(){
+  if(!CLOUD || !SESSION) return;
+  const row = {
+    data: Object.assign(clone(S), { __skin: SKIN }),
+    owner_name: (SESSION.user && SESSION.user.name) || null,
+    updated_at: new Date().toISOString()
+  };
+  try{
+    const r = ROW_ID
+      ? await CLOUD.database.from('resumes').update(row).eq('id', ROW_ID).select()
+      : await CLOUD.database.from('resumes').insert(row).select();
+    if(r.error){ setSync('error'); toast('保存失败：' + r.error.message); return; }
+    const rows = Array.isArray(r.data) ? r.data : [];
+    if(!rows.length){ setSync('error'); toast('保存被拒绝（这行不属于你）'); return; }
+    ROW_ID = rows[0].id;
+    setSync('saved');
+  }catch(e){
+    setSync('error');
+    toast('网络断了，这份还没存上');
+  }
+}
+
+async function loadCloud(){
+  const r = await CLOUD.database.from('resumes').select('id,data').limit(1);
+  if(r.error){ toast('读取失败：' + r.error.message); S = clone(EMPTY); return; }
+  const rows = r.data || [];
+  if(rows.length){
+    ROW_ID = rows[0].id;
+    S = Object.assign(clone(EMPTY), rows[0].data || {});
+    delete S.__skin;
+    SKIN = (rows[0].data && rows[0].data.__skin) || 'serif';
+  }else{
+    ROW_ID = null;
+    S = clone(EMPTY);
+  }
 }
 
 const getPath=(o,p)=> p.split('.').reduce((a,k)=> (a==null?a:a[k]), o);
@@ -1645,7 +1800,7 @@ $('#drawerClose').addEventListener('click',()=>$('#drawer').classList.remove('is
   document.addEventListener('click',e=>{
     if(e.target.closest('[data-next]')){ go(idx+1); return; }
     const ent=e.target.closest('[data-enter]');
-    if(ent){ enter(ent.dataset.enter); }
+    if(ent){ ent.dataset.enter==='demo' ? startDemo() : startFlow(); }
   });
   document.addEventListener('keydown',e=>{
     if(e.target.matches('input,textarea')) return;
@@ -1665,98 +1820,178 @@ $('#drawerClose').addEventListener('click',()=>$('#drawer').classList.remove('is
   if(s>0) go(s-1);
 })();
 
-function enter(mode){
+function enterApp(){
   $('#intro').classList.add('is-out');
   document.body.classList.add('is-app');
   $('#app').setAttribute('aria-hidden','false');
   setTimeout(()=>{ $('#intro').hidden=true; },760);
 
-  if(mode==='empty'){
-    S=clone(EMPTY);
-    S.education.push({school:'',degree:'',major:'',start:'',end:'',note:''});
-    S.experience.push({org:'',role:'',start:'',end:'',bullets:''});
-    S.skills=[{group:'核心',items:''}];
-  }else{
-    S=clone(DEMO);
-  }
-
-  $('#targetTitle').value=S.target.title||'';
-  $('#jdText').value=S.target.jd||'';
+  $('#targetTitle').value=(S.target&&S.target.title)||'';
+  $('#jdText').value=(S.target&&S.target.jd)||'';
   syncSkin();
   renderForms(); renderPaper(); renderApps();
   requestAnimationFrame(applyZoom);
-
   if(window.innerWidth<=1024) $('#work').dataset.tab='stage';
+  updateUser();
+}
 
-  if(mode==='empty'){
-    setTimeout(()=>{ $('#app').classList.add('x'); $('#drawer').classList.add('is-open'); chatStart(); }, 620);
+function updateUser(){
+  if(!SESSION){ $('#userName').textContent='演示模式'; $('#userInitial').textContent='·'; return; }
+  const u = SESSION.user || {};
+  const nm = u.name || u.email || u.phone || '已登录';
+  $('#userName').textContent = nm;
+  $('#userInitial').textContent = (String(nm)[0]||'·').toUpperCase();
+  setSync('saved');
+}
+
+/* ---------- 登录 ---------- */
+function showLogin(msg){ $('#login').hidden=false; $('#loginErr').textContent=msg||''; }
+function hideLogin(){ $('#login').hidden=true; }
+
+async function sendCode(){
+  if(!CLOUD) return;
+  const email=($('#loginEmail').value||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ $('#loginErr').textContent='邮箱格式不对'; return; }
+  $('#loginErr').textContent='';
+  const b=$('#btnSendCode'); b.disabled=true; b.textContent='发送中…';
+  const sent=await CLOUD.auth.sendOtp({email});
+  if(sent.error){ b.disabled=false; b.textContent='获取验证码'; $('#loginErr').textContent=sent.error.message; return; }
+  pendingOtp={email,verificationId:sent.data.verificationId,isExistingUser:sent.data.isExistingUser};
+  let n=60; b.textContent=n+'s 后重发';
+  const t=setInterval(()=>{ n--; if(n<=0){clearInterval(t);b.disabled=false;b.textContent='重新获取';} else b.textContent=n+'s 后重发'; },1000);
+}
+
+async function afterLogin(){
+  const {data:session}=await CLOUD.auth.getSession();
+  if(!session){ showLogin('登录没成功，再试一次'); return; }
+  SESSION=session;
+  await loadCloud();
+  hideLogin();
+  enterApp();
+  if(!ROW_ID){
+    setTimeout(()=>{
+      $('#drawer').classList.add('is-open');
+      if(!$('#chatHost').children.length) chatStart();
+    },700);
   }
 }
 
+async function emailLogin(e){
+  e.preventDefault();
+  if(!CLOUD) return;
+  const email=($('#loginEmail').value||'').trim();
+  const token=($('#loginCode').value||'').trim();
+  if(!pendingOtp || pendingOtp.email!==email){ $('#loginErr').textContent='先点「获取验证码」'; return; }
+  if(!token){ $('#loginErr').textContent='验证码没填'; return; }
+  $('#loginErr').textContent='';
+  const r=await CLOUD.auth.verifyOtp({email:pendingOtp.email,verificationId:pendingOtp.verificationId,isExistingUser:pendingOtp.isExistingUser,token});
+  if(r.error){ $('#loginErr').textContent=r.error.message; return; }
+  pendingOtp=null;
+  await afterLogin();
+}
+
+async function wechatLogin(){
+  if(!CLOUD) return;
+  $('#loginErr').textContent='';
+  const {data,error}=await CLOUD.auth.signInWithOAuth({provider:'wechat',redirectTo:location.origin});
+  if(error){ $('#loginErr').textContent=error.message; return; }
+  location.assign(data.url);
+}
+
+function startDemo(){
+  MODE='demo';
+  document.body.classList.add('is-demo');
+  hideLogin();
+  S=clone(DEMO);
+  enterApp();
+}
+
+function startFlow(){
+  if(SESSION){ enterApp(); return; }
+  showLogin();
+}
+
+async function signOut(){
+  try{ if(CLOUD) await CLOUD.auth.signOut(); }catch(e){}
+  location.reload();
+}
+
+async function handleCallback(){
+  const url=new URL(location.href);
+  if(!url.searchParams.has('code') && !url.searchParams.has('error')) return;
+  const provider=url.searchParams.get('provider');
+  if(provider!=='wechat' && provider!=='workbuddy') return;
+  const fn = provider==='wechat' ? CLOUD.auth.handleWechatWebCallback : CLOUD.auth.handleWorkBuddyCallback;
+  if(typeof fn!=='function'){ showLogin('登录组件版本不匹配，刷新试试'); return; }
+  const {data:session,error}=await fn.call(CLOUD.auth);
+  if(error){ showLogin(error.message); return; }
+  if(session){
+    for(const k of ['code','state','provider']) url.searchParams.delete(k);
+    history.replaceState(null,'',url.pathname+url.search+url.hash);
+  }
+}
+
+$('#btnWechat').addEventListener('click', wechatLogin);
+$('#btnSendCode').addEventListener('click', sendCode);
+$('#emailForm').addEventListener('submit', emailLogin);
+$('#btnDemo').addEventListener('click', startDemo);
+$('#btnUser').addEventListener('click', ()=>{ if(SESSION) signOut(); });
+
 /* ---------- 启动 ---------- */
-load();
-$('#targetTitle').value=S.target.title||'';
-$('#jdText').value=S.target.jd||'';
 renderForms(); renderPaper(); renderApps();
 requestAnimationFrame(applyZoom);
 
-/* 直接进工作台：?app=1 / ?app=empty / ?skin=cn */
-(function preset(){
+(async function boot(){
   const q=new URLSearchParams(location.search);
+
   const sk=q.get('skin');
-  if(sk && ['serif','mono','sans','cn'].indexOf(sk)>=0){
-    SKIN=sk;
-    $$('#skinBar [data-skin]').forEach(x=>x.classList.toggle('is-on',x.dataset.skin===sk));
-  }
-  const a=q.get('app') || (HAD_SAVED?'keep':null);
-  if(a){
-    $('#intro').hidden=true;
-    document.body.classList.add('is-app');
-    const ap=$('#app');
-    ap.setAttribute('aria-hidden','false');
-    ap.style.transition='none';
-    ap.style.opacity='1';
-    if(a==='empty'){
-      S=clone(EMPTY);
-      S.education.push({school:'',degree:'',major:'',start:'',end:'',note:''});
-      S.experience.push({org:'',role:'',start:'',end:'',bullets:''});
-      S.skills=[{group:'核心',items:''}];
-      $('#targetTitle').value=''; $('#jdText').value='';
-      renderForms();
-    }
-    renderPaper(); renderApps();
-    requestAnimationFrame(applyZoom);
-    if(a==='empty'){
-      setTimeout(()=>{ $('#drawer').classList.add('is-open'); chatStart(); },260);
-    }
-    if(q.get('panel')==='mcp') setTimeout(()=>$('#modal').classList.add('is-open'),200);
-    if(q.get('panel')==='apps') setTimeout(()=>{
-      $$('#tabs .tab').forEach(x=>x.classList.toggle('is-on',x.dataset.tab==='apps'));
-      $('#paneScore').classList.remove('is-on'); $('#paneApps').classList.add('is-on');
-    },200);
-  }
+  if(sk && ['serif','mono','sans','cn'].indexOf(sk)>=0) SKIN=sk;
+
   if(q.get('test')){
-      const out=[];
-      try{
-        ['serif','mono','sans','cn'].forEach(k=>{
-          SKIN=k; renderPaper();
-          out.push(k+'='+$('#paper').querySelectorAll('.p-sec').length);
-        });
-        SKIN='serif'; renderPaper();
-        out.push('chk='+autoChecks().pass);
-        out.push('kw='+kwStats().rate+'%');
-        chatStart();
-        FLOW.forEach((s,i)=>{ s.apply(['陈嘉行，产品设计师','13800138000 a@b.com 深圳','云图科技/高级设计师/2023.04','把核心流程从 7 步压到 3 步','华南理工/工业设计/本科/2017-2021','高级产品设计师'][i]); });
-        out.push('name='+(S.profile.name||'-'));
-        out.push('edu='+S.education.length+' exp='+S.experience.length);
-        out.push('edit='+(agentEdit('简介改成一句新的测试文案')||'no'));
-        out.push('skin2='+(agentEdit('换成中文国企')?'cn':'no'));
-        out.push('add='+(agentEdit('加一条 测试用的成绩数字 30%')?'ok':'no'));
-        out.push('md='+toMarkdown().length);
-      }catch(e){ out.push('ERR:'+e.message); }
-      document.title='TEST '+out.join(' | ');
+    const out=[];
+    try{
+      S=clone(DEMO);
+      ['serif','mono','sans','cn'].forEach(k=>{ SKIN=k; renderPaper(); out.push(k+'='+$('#paper').querySelectorAll('.p-sec').length); });
+      SKIN='serif'; renderPaper();
+      out.push('chk='+autoChecks().pass);
+      out.push('kw='+kwStats().rate+'%');
+      chatStart();
+      FLOW.forEach((s,i)=>{ s.apply(['陈嘉行，产品设计师','13800138000 a@b.com 深圳','云图科技/高级设计师/2023.04','把核心流程从 7 步压到 3 步','华南理工/工业设计/本科/2017-2021','高级产品设计师'][i]); });
+      out.push('name='+(S.profile.name||'-'));
+      out.push('edu='+S.education.length+' exp='+S.experience.length);
+      out.push('edit='+(agentEdit('简介改成一句新的测试文案')||'no'));
+      out.push('skin2='+(agentEdit('换成中文国企')?'cn':'no'));
+      out.push('add='+(agentEdit('加一条 测试用的成绩数字 30%')?'ok':'no'));
+      out.push('md='+toMarkdown().length);
+      out.push('sdk='+(window.WorkBuddyCloud?'loaded':'missing'));
+    }catch(e){ out.push('ERR:'+e.message); }
+    document.title='TEST '+out.join(' | ');
+    return;
   }
+
+  if(!window.WorkBuddyCloud){ showLogin('云服务没加载出来，检查网络后刷新'); return; }
+
+  try{
+    CLOUD = WorkBuddyCloud.createWorkBuddyCloud(CLOUD_CFG);
+    await handleCallback();
+    const {data:session} = await CLOUD.auth.getSession();
+    if(session){
+      SESSION=session;
+      await loadCloud();
+      $('#intro').hidden=true;
+      document.body.classList.add('is-app');
+      const ap=$('#app'); ap.style.transition='none'; ap.style.opacity='1';
+      enterApp();
+      return;
+    }
+  }catch(e){
+    showLogin('连接云服务失败：'+((e&&e.message)||''));
+    return;
+  }
+
+  if(q.get('demo')) startDemo();
 })();
+
 
 })();
 </script>

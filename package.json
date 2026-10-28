@@ -1,9 +1,9 @@
 {
-  "name": "cv-studio",
+  "name": "gongzi-cv",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "一份数据四套版式六道体检的简历工具，网页端 + MCP 服务器",
+  "description": "公子简历作坊 · 一份数据四套版式六道体检，登录后存云端",
   "scripts": {
     "test": "node test-mcp.mjs",
     "mcp": "node mcp-server.mjs"
